@@ -3,6 +3,8 @@ package dcc025.PedroJoseCA;
 import java.util.Scanner;
 
 public class Game {
+    private int gameMode;
+
     public void start() {
         System.out.println("Welcome to Duels");
         selectGameMode();
@@ -13,11 +15,16 @@ public class Game {
         System.out.println("Digit 1 for single player");
         System.out.println("Digit 2 for multiplayer");
         Scanner keyboard = new Scanner(System.in);
-        int gameMode = keyboard.nextInt();
-        if (gameMode == 1) {
+        int selectedGameMode = keyboard.nextInt();
+        if (selectedGameMode == 1) {
+            gameMode = selectedGameMode;
             playSinglePlayer();
-        } else if (gameMode == 2) {
+        } else if (selectedGameMode == 2) {
+            gameMode = selectedGameMode;
             playMultiPlayer();
+        } else {
+            System.out.println("Invalid game mode. Try again.");
+            selectGameMode();
         }
     }
 
@@ -27,5 +34,9 @@ public class Game {
 
     private void playMultiPlayer() {
         System.out.println("Playing on Multi Player");
+    }
+
+    private void chooseCharacters() {
+
     }
 }
