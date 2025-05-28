@@ -1,9 +1,9 @@
-package dcc025.PedroJoseCA;
+package dcc025.PedroJoseCA.game;
 
 import java.util.Scanner;
 
 public class Game {
-    private int gameMode;
+    private int numberOfPlayers;
 
     public void start() {
         System.out.println("Welcome to Duels");
@@ -17,10 +17,10 @@ public class Game {
         Scanner keyboard = new Scanner(System.in);
         int selectedGameMode = keyboard.nextInt();
         if (selectedGameMode == 1) {
-            gameMode = selectedGameMode;
+            numberOfPlayers = selectedGameMode;
             playSinglePlayer();
         } else if (selectedGameMode == 2) {
-            gameMode = selectedGameMode;
+            numberOfPlayers = selectedGameMode;
             playMultiPlayer();
         } else {
             System.out.println("Invalid game mode. Try again.");
