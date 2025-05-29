@@ -2,13 +2,13 @@ package dcc025.PedroJoseCA.game;
 
 import java.util.Random;
 
-public class Board {
+public class Board<P1, P2> {
     Random random = new Random();
     final int BOARD_SIZE = 10;
 
     private final int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
 
-    Board() {
+    Board(P1 player1, P2 player2) {
         int[] firstRandomPosition = getRandomCoordinate();
         board[firstRandomPosition[0]][firstRandomPosition[1]] = 1;
 
@@ -19,11 +19,10 @@ public class Board {
         board[secondRandomPosition[0]][secondRandomPosition[1]] = 2;
     }
 
-
     private int[] getRandomCoordinate() {
-        int randomI = random.nextInt(BOARD_SIZE);
-        int randomJ = random.nextInt(BOARD_SIZE);
-        return new int[]{randomI, randomJ};
+        int randomX = random.nextInt(BOARD_SIZE);
+        int randomY = random.nextInt(BOARD_SIZE);
+        return new int[]{randomX, randomY};
     }
 
     public void printBoard() {
