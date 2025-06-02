@@ -41,7 +41,7 @@ public class Board {
         return playerPositions[playerNumber - 1];
     }
 
-    int getDistanceBetweenPlayers() {
+    public int getDistanceBetweenPlayers() {
         // Using Chebyshev distance
         return Math.max(
                 Math.abs(playerPositions[0][0] - playerPositions[1][0]),
