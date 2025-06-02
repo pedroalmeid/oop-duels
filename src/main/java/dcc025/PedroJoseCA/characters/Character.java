@@ -45,4 +45,24 @@ public class Character {
     public int getHp() {
         return hp;
     }
+
+    public boolean isAlive() {
+        return hp > 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getCurrentDefense() {
+        return currentDefense;
+    }
+
+    public int getRange() {
+        return range;
+    }
 }

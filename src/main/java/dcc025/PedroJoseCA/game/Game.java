@@ -61,6 +61,23 @@ public class Game {
         if (numberOfPlayers == 2) {
             player1 = chooseCharacter(1);
             player2 = chooseCharacter(2);
+            board = new Board();
+            displayInfo();
         }
+    }
+
+    private void displayInfo() {
+        System.out.println("Current state of the board");
+        board.printBoard();
+        displayPlayerInfo(player1);
+        displayPlayerInfo(player2);
+    }
+
+    private void displayPlayerInfo(Character player) {
+        System.out.println(player.getName() + " information (PLAYER " + player.getPlayerNumber() + ")");
+        System.out.println("HP: " + player.getHp());
+        System.out.println("Current attack force: " + player.getAttack());
+        System.out.println("Current defense force: " + player.getCurrentDefense());
+        System.out.println("Current range: " + player.getRange());
     }
 }
