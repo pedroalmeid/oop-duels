@@ -1,6 +1,7 @@
 package dcc025.PedroJoseCA.game;
 
 import java.util.Scanner;
+import dcc025.PedroJoseCA.characters.Character;
 
 public class Game {
     final private Scanner KEYBOARD = new Scanner(System.in);
@@ -40,7 +41,7 @@ public class Game {
         }
         System.out.println("Please enter your character name");
         String selectedCharacterName = KEYBOARD.next();
-
+        Character newCharacter = new Character(selectedCharacterName, playerNumber);
     }
 
     private void manageCharacters() {

@@ -1,14 +1,17 @@
 package dcc025.PedroJoseCA.characters;
 
 public class Character {
-    private int[] position = new int [2];
-    private String name;
-    private int hp = 100;
-    private int attack;
-    private int defense;
-    private int range;
+    protected int[] position = new int [2];
+    protected String name;
+    protected int hp = 100;
+    protected int attack;
+    protected int maxDefense;
+    protected int currentDefense;
+    protected int range;
+    protected int numberId;
 
-    public Character(String givenName) {
+    public Character(String givenName, int playerNumber) {
         name = givenName;
+        numberId = playerNumber;
     }
 }

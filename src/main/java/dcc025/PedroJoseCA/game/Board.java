@@ -3,10 +3,10 @@ package dcc025.PedroJoseCA.game;
 import java.util.Random;
 
 public class Board<P1, P2> {
-    Random random = new Random();
+    final Random RANDOM = new Random();
     final int BOARD_SIZE = 10;
 
-    private final int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
+    private int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
 
     Board(P1 player1, P2 player2) {
         int[] firstRandomPosition = getRandomCoordinate();
@@ -20,8 +20,8 @@ public class Board<P1, P2> {
     }
 
     private int[] getRandomCoordinate() {
-        int randomX = random.nextInt(BOARD_SIZE);
-        int randomY = random.nextInt(BOARD_SIZE);
+        int randomX = RANDOM.nextInt(BOARD_SIZE);
+        int randomY = RANDOM.nextInt(BOARD_SIZE);
         return new int[]{randomX, randomY};
     }
 
