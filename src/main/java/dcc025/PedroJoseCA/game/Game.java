@@ -12,6 +12,8 @@ public class Game {
 
     private int numberOfPlayers;
     private Board board;
+    private Character player1;
+    private Character player2;
 
     public void start() {
         System.out.println("Welcome to Duels");
@@ -57,9 +59,8 @@ public class Game {
 
     private void manageCharacters() {
         if (numberOfPlayers == 2) {
-            Character player1 = chooseCharacter(1);
-            Character player2 = chooseCharacter(2);
-            board = new Board(player1, player2);
+            player1 = chooseCharacter(1);
+            player2 = chooseCharacter(2);
         }
     }
 }

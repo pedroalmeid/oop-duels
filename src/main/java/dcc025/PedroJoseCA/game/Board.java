@@ -1,7 +1,5 @@
 package dcc025.PedroJoseCA.game;
 
-import dcc025.PedroJoseCA.characters.Character;
-
 import java.util.Random;
 
 public class Board {
@@ -11,7 +9,7 @@ public class Board {
     private int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
     private int [][] playerPositions = new int [2][2];
 
-    Board(Character player1, Character player2) {
+    Board() {
         int[] firstRandomPosition = getRandomCoordinate();
         board[firstRandomPosition[0]][firstRandomPosition[1]] = 1;
         playerPositions[0] = firstRandomPosition;
@@ -30,12 +28,24 @@ public class Board {
         return new int[]{randomX, randomY};
     }
 
-    public void printBoard() {
+    void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
+    }
+
+    public int[] getPlayerPosition(int playerNumber) {
+        return playerPositions[playerNumber - 1];
+    }
+
+    int getDistanceBetweenPlayers() {
+        // Using Chebyshev distance
+        return Math.max(
+                Math.abs(playerPositions[0][0] - playerPositions[1][0]),
+                Math.abs(playerPositions[0][1] - playerPositions[1][1])
+        );
     }
 }
