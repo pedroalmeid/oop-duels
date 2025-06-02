@@ -1,11 +1,17 @@
 package dcc025.PedroJoseCA.game;
 
 import java.util.Scanner;
+
+import dcc025.PedroJoseCA.characters.Bowman;
 import dcc025.PedroJoseCA.characters.Character;
+import dcc025.PedroJoseCA.characters.Warrior;
+import dcc025.PedroJoseCA.characters.Wizard;
 
 public class Game {
     final private Scanner KEYBOARD = new Scanner(System.in);
+
     private int numberOfPlayers;
+    private Board board;
 
     public void start() {
         System.out.println("Welcome to Duels");
@@ -28,10 +34,10 @@ public class Game {
         numberOfPlayers = selectedGameMode;
     }
 
-    private void chooseCharacter(int playerNumber) {
+    private Character chooseCharacter(int playerNumber) {
         System.out.println("PLAYER " + playerNumber);
         System.out.println("Please select your character");
-        System.out.println("Digit 0 for Archer");
+        System.out.println("Digit 0 for Bowman");
         System.out.println("Digit 1 for Warrior");
         System.out.println("Digit 2 for Wizard");
         int selectedCharacter = KEYBOARD.nextInt();
@@ -41,10 +47,19 @@ public class Game {
         }
         System.out.println("Please enter your character name");
         String selectedCharacterName = KEYBOARD.next();
-        Character newCharacter = new Character(selectedCharacterName, playerNumber);
+        return switch (selectedCharacter) {
+            case 0 -> new Bowman(selectedCharacterName, playerNumber);
+            case 1 -> new Warrior(selectedCharacterName, playerNumber);
+            case 2 -> new Wizard(selectedCharacterName, playerNumber);
+            default -> null;
+        };
     }
 
     private void manageCharacters() {
-
+        if (numberOfPlayers == 2) {
+            Character player1 = chooseCharacter(1);
+            Character player2 = chooseCharacter(2);
+            board = new Board(player1, player2);
+        }
     }
 }
