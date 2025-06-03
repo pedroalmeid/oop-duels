@@ -9,4 +9,10 @@ public class Wizard extends Character {
         currentDefense = maxDefense;
         range = 3;
     }
+
+    public void useUltimate(Character enemy) {
+        int enemyHp = enemy.getHp();
+        enemy.setHp(this.getHp());
+        this.setHp(enemyHp);
+    }
 }

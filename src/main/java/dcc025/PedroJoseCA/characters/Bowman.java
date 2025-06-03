@@ -9,4 +9,8 @@ public class Bowman extends Character {
         currentDefense = maxDefense;
         range = 5;
     }
+
+    public void useUltimate() {
+        range++;
+    }
 }

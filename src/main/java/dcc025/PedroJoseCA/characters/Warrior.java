@@ -9,4 +9,8 @@ public class Warrior extends Character {
         currentDefense = maxDefense;
         range = 1;
     }
+
+    public void useUltimate() {
+        attack = 30;
+    }
 }

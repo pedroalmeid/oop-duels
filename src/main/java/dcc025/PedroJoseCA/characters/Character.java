@@ -45,7 +45,9 @@ public class Character {
     public void move(Board currentBoard, String direction) {
         boolean validMove = currentBoard.movePlayer(numberId, direction);
         if (!validMove) {
+            System.out.println();
             System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board");
+            System.out.println();
         }
     }
 
@@ -71,5 +73,9 @@ public class Character {
 
     public int getRange() {
         return range;
+    }
+
+    protected void setHp(int newHp) {
+        hp = newHp;
     }
 }
