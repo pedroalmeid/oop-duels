@@ -19,6 +19,12 @@ public class Game {
         System.out.println("Welcome to Duels");
         selectGameMode();
         manageCharacters();
+        player1.move(board, "up");
+        player2.move(board, "down");
+        displayInfo();
+        player1.move(board, "left");
+        player2.move(board, "right");
+        displayInfo();
     }
 
     private void selectGameMode() {
@@ -79,5 +85,7 @@ public class Game {
         System.out.println("Current attack force: " + player.getAttack());
         System.out.println("Current defense force: " + player.getCurrentDefense());
         System.out.println("Current range: " + player.getRange());
+        int[] position = board.getPlayerPosition(player.getPlayerNumber());
+        System.out.println("Player position: [" + position[0] + ", " + position[1] + "]" );
     }
 }

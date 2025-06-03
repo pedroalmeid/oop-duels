@@ -23,9 +23,9 @@ public class Board {
     }
 
     private int[] getRandomCoordinate() {
-        int randomX = RANDOM.nextInt(BOARD_SIZE);
-        int randomY = RANDOM.nextInt(BOARD_SIZE);
-        return new int[]{randomX, randomY};
+        int randomI = RANDOM.nextInt(BOARD_SIZE);
+        int randomJ = RANDOM.nextInt(BOARD_SIZE);
+        return new int[]{randomI, randomJ};
     }
 
     void printBoard() {
@@ -47,5 +47,47 @@ public class Board {
                 Math.abs(playerPositions[0][0] - playerPositions[1][0]),
                 Math.abs(playerPositions[0][1] - playerPositions[1][1])
         );
+    }
+
+    public boolean movePlayer(int playerNumber, String direction) {
+        int[] playerPosition = getPlayerPosition(playerNumber);
+        int height = playerPosition[0];
+        int width = playerPosition[1];
+
+        switch (direction) {
+            case "up":
+                if (height - 1 >= 0) {
+                    board[height][width] = 0;
+                    playerPositions[playerNumber - 1][0]--;
+                    board[height-1][width] = playerNumber;
+                    return true;
+                }
+                break;
+            case "down":
+                if (height + 1 < BOARD_SIZE) {
+                    board[height][width] = 0;
+                    playerPositions[playerNumber - 1][0]++;
+                    board[height+1][width] = playerNumber;
+                    return true;
+                }
+                break;
+            case "left":
+                if (width - 1 >= 0) {
+                    board[height][width] = 0;
+                    playerPositions[playerNumber - 1][1]--;
+                    board[height][width-1] = playerNumber;
+                    return true;
+                }
+                break;
+            case "right":
+                if (width + 1 < BOARD_SIZE) {
+                    board[height][width] = 0;
+                    playerPositions[playerNumber - 1][1]++;
+                    board[height][width+1] = playerNumber;
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 }

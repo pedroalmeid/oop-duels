@@ -42,6 +42,13 @@ public class Character {
         }
     }
 
+    public void move(Board currentBoard, String direction) {
+        boolean validMove = currentBoard.movePlayer(numberId, direction);
+        if (!validMove) {
+            System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board");
+        }
+    }
+
     public int getHp() {
         return hp;
     }
