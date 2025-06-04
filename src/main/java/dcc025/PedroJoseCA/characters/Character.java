@@ -46,6 +46,9 @@ public class Character {
             lostDefense = attackDamage;
         } else {
             hp -= attackDamage - currentDefense;
+            if (hp < 0) {
+                hp = 0;
+            }
             lostDefense = currentDefense;
             lostHp = attackDamage - currentDefense;
             currentDefense = 0;
