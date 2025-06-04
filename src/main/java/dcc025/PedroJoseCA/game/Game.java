@@ -39,6 +39,7 @@ public class Game {
     }
 
     private Character chooseCharacter(int playerNumber) {
+        System.out.println();
         System.out.println("PLAYER " + playerNumber);
         System.out.println("Please select your character");
         System.out.println("Digit 0 for Bowman");
@@ -49,6 +50,7 @@ public class Game {
             System.out.println("Invalid digit for character. Try again.");
             selectedCharacter = KEYBOARD.nextInt();
         }
+        System.out.println();
         System.out.println("Please enter your character name");
         String selectedCharacterName = KEYBOARD.next();
         return switch (selectedCharacter) {
@@ -67,9 +69,12 @@ public class Game {
     }
 
     private void displayInfo() {
+        System.out.println();
         System.out.println("Current state of the board");
         board.printBoard();
+        System.out.println();
         displayPlayerInfo(player1);
+        System.out.println();
         displayPlayerInfo(player2);
     }
 
