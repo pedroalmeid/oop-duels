@@ -60,6 +60,7 @@ public class Game {
                 player.move(board);
                 break;
             case 3:
+                player.useUltimate(enemy);
                 break;
             case 4:
                 return false;

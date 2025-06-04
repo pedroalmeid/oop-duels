@@ -51,7 +51,7 @@ public class Character {
         boolean validMove = currentBoard.askToMovePlayer(numberId, "down");
         if (!validMove) {
             System.out.println();
-            System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board");
+            System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board or to the enemy's position");
         }
     }
 
@@ -82,4 +82,6 @@ public class Character {
     protected void setHp(int newHp) {
         hp = newHp;
     }
+
+    public void useUltimate(Character enemy) {}
 }

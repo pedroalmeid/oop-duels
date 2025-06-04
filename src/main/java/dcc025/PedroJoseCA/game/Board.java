@@ -64,20 +64,23 @@ public class Board {
     public boolean askToMovePlayer(int playerNumber, String direction) {
         int[] playerPosition = getPlayerPosition(playerNumber);
         int enemyNumber = (playerNumber == 1) ? 2 : 1;
+        int[] enemyPosition = getPlayerPosition(enemyNumber);
+
         int height = playerPosition[0];
         int width = playerPosition[1];
+        int enemyHeight = enemyPosition[0];
+        int enemyWidth = enemyPosition[1];
 
         switch (direction) {
             case "up":
-                if (height - 1 >= 0) {
+                if (height - 1 >= 0 && (height - 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][0]--;
                     board[height-1][width] = playerNumber;
                     return true;
                 }
-                break;
             case "down":
-                if (height + 1 < BOARD_SIZE) {
+                if (height + 1 < BOARD_SIZE && (height + 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][0]++;
                     board[height+1][width] = playerNumber;
@@ -85,7 +88,7 @@ public class Board {
                 }
                 break;
             case "left":
-                if (width - 1 >= 0) {
+                if (width - 1 >= 0 && (height != enemyHeight || width - 1 != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][1]--;
                     board[height][width-1] = playerNumber;
@@ -93,7 +96,7 @@ public class Board {
                 }
                 break;
             case "right":
-                if (width + 1 < BOARD_SIZE) {
+                if (width + 1 < BOARD_SIZE && (height != enemyHeight || width + 1 != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][1]++;
                     board[height][width+1] = playerNumber;
