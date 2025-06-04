@@ -25,7 +25,6 @@ public class Game {
         manageCharacters();
         displayInfo();
         play();
-        gameOver();
     }
 
     private void selectGameMode() {
@@ -93,23 +92,24 @@ public class Game {
     }
 
     private void play() {
-        boolean proceed = true;
         if (numberOfPlayers == 2) {
-            while (proceed) {
-                if (playerActions(player1, player2)) {
-                    proceed = playerActions(player2, player1);
-                    displayInfo();
-                }
-                else {
-                    break;
-                }
+            if (!player1.isAlive()) {
+                System.out.println(player1.getName() + " was dead");
+                gameOver(player2, player1);
+                return;
             }
-            System.out.println();
-            System.out.println("Ending game");
+            playerActions(player1, player2);
+            if (!player2.isAlive()) {
+                System.out.println(player2.getName() + " was dead");
+                gameOver(player1, player2);
+                return;
+            }
+            displayInfo();
+            play();
         }
     }
 
-    private boolean playerActions(Character player, Character enemy) {
+    private void playerActions(Character player, Character enemy) {
         System.out.println();
         System.out.println("PLAYER " + player.getPlayerNumber());
         System.out.println(player.getName() + ", please select your next action:");
@@ -137,12 +137,20 @@ public class Game {
                 player.useUltimate(enemy);
                 break;
             case 4:
-                return false;
+                gameOver();
+                break;
         }
-        return true;
     }
 
     private void gameOver() {
+        System.out.println();
+        System.out.println("Forcing end of game as requested");
+    }
 
+    private void gameOver(Character winner, Character loser) {
+        System.out.println();
+        System.out.println("GAME OVER");
+        System.out.println(winner.getName() + " defeated " + loser.getName());
+        System.out.println("Congratulations to PLAYER " + winner.getPlayerNumber() + "!!");
     }
 }
