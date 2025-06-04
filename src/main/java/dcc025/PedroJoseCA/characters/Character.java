@@ -22,7 +22,7 @@ public class Character {
 
     public void defend() {
         System.out.println();
-        System.out.println("You defended yourself. Current defense now is " + maxDefense);
+        System.out.println(name + " defended. Current defense now is " + maxDefense);
         currentDefense = maxDefense;
     }
 
@@ -30,28 +30,35 @@ public class Character {
         int distance = currentBoard.getDistanceBetweenPlayers();
         if (distance > range) {
             System.out.println();
-            System.out.println("Your attack was unsuccessful. Your character has no attack range at this distance");
+            System.out.println(name + "'s attack was unsuccessful. The character has no attack range at this distance");
         } else {
             System.out.println();
-            System.out.println("You attacked " + enemy.getName());
+            System.out.println(name + " attacked " + enemy.getName());
             enemy.sufferDamage(attack);
         }
     }
 
     protected void sufferDamage(int attackDamage) {
+        int lostDefense = 0;
+        int lostHp = 0;
         if (currentDefense - attackDamage >= 0) {
             currentDefense -= attackDamage;
+            lostDefense = attackDamage;
         } else {
-            currentDefense = 0;
             hp -= attackDamage - currentDefense;
+            lostDefense = currentDefense;
+            lostHp = attackDamage - currentDefense;
+            currentDefense = 0;
         }
+        System.out.println();
+        System.out.println(name + "lost " + lostDefense + " of defense and " + lostHp + " of hp." );
     }
 
     public void move(Board currentBoard) {
         boolean validMove = currentBoard.askToMovePlayer(numberId, "down");
         if (!validMove) {
             System.out.println();
-            System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board or to the enemy's position");
+            System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
         }
     }
 

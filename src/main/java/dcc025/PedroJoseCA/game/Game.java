@@ -15,30 +15,104 @@ public class Game {
     private Character player1;
     private Character player2;
 
+    public Game() {
+        board = new Board();
+    }
+
     public void start() {
         System.out.println("Welcome to Duels");
-
         selectGameMode();
         manageCharacters();
-
-        board = new Board();
         displayInfo();
-
         play();
+        gameOver();
+    }
+
+    private void selectGameMode() {
+        int selectedGameMode;
+        do {
+            System.out.println();
+            System.out.println("Select a game mode");
+            System.out.println("Digit 1 for single player");
+            System.out.println("Digit 2 for multiplayer");
+            selectedGameMode = KEYBOARD.nextInt();
+            if (selectedGameMode != 1 && selectedGameMode != 2) {
+                System.out.println("Invalid game mode. Try again.");
+            }
+        } while (selectedGameMode != 1 && selectedGameMode != 2);
+
+        numberOfPlayers = selectedGameMode;
+    }
+
+    private void manageCharacters() {
+        if (numberOfPlayers == 2) {
+            player1 = chooseCharacter(1);
+            player2 = chooseCharacter(2);
+        }
+    }
+
+    private Character chooseCharacter(int playerNumber) {
+        System.out.println();
+        System.out.println("PLAYER " + playerNumber);
+        System.out.println("Please select your character");
+        System.out.println("Digit 0 for Bowman");
+        System.out.println("Digit 1 for Warrior");
+        System.out.println("Digit 2 for Wizard");
+        int selectedCharacter = KEYBOARD.nextInt();
+        while (selectedCharacter < 0 || selectedCharacter > 2) {
+            System.out.println("Invalid digit for character. Try again.");
+            selectedCharacter = KEYBOARD.nextInt();
+        }
+        System.out.println();
+        System.out.println("Please enter your character name");
+        String selectedCharacterName = KEYBOARD.next();
+        return switch (selectedCharacter) {
+            case 0 -> new Bowman(selectedCharacterName, playerNumber);
+            case 1 -> new Warrior(selectedCharacterName, playerNumber);
+            case 2 -> new Wizard(selectedCharacterName, playerNumber);
+            default -> null;
+        };
+    }
+
+    private void displayInfo() {
+        System.out.println();
+        System.out.println("Current state of the board");
+        board.printBoard();
+        System.out.println();
+        displayPlayerInfo(player1);
+        System.out.println();
+        displayPlayerInfo(player2);
+    }
+
+    private void displayPlayerInfo(Character player) {
+        System.out.println(player.getName() + " information (PLAYER " + player.getPlayerNumber() + ")");
+        System.out.println("HP: " + player.getHp());
+        System.out.println("Current attack force: " + player.getAttack());
+        System.out.println("Current defense force: " + player.getCurrentDefense());
+        System.out.println("Current range: " + player.getRange());
     }
 
     private void play() {
+        boolean proceed = true;
         if (numberOfPlayers == 2) {
-            playerActions(player1, player2);
-            playerActions(player2, player1);
+            while (proceed) {
+                if (playerActions(player1, player2)) {
+                    proceed = playerActions(player2, player1);
+                    displayInfo();
+                }
+                else {
+                    break;
+                }
+            }
+            System.out.println();
+            System.out.println("Ending game");
         }
-        displayInfo();
     }
 
     private boolean playerActions(Character player, Character enemy) {
         System.out.println();
         System.out.println("PLAYER " + player.getPlayerNumber());
-        System.out.println("Please select your next action");
+        System.out.println(player.getName() + ", please select your next action:");
         System.out.println("Digit 0 to Attack");
         System.out.println("Digit 1 to Defend");
         System.out.println("Digit 2 to Move");
@@ -68,67 +142,7 @@ public class Game {
         return true;
     }
 
-    private void selectGameMode() {
-        int selectedGameMode;
-        do {
-            System.out.println();
-            System.out.println("Select a game mode");
-            System.out.println("Digit 1 for single player");
-            System.out.println("Digit 2 for multiplayer");
-            selectedGameMode = KEYBOARD.nextInt();
-            if (selectedGameMode != 1 && selectedGameMode != 2) {
-                System.out.println("Invalid game mode. Try again.");
-            }
-        } while (selectedGameMode != 1 && selectedGameMode != 2);
+    private void gameOver() {
 
-        numberOfPlayers = selectedGameMode;
-    }
-
-    private Character chooseCharacter(int playerNumber) {
-        System.out.println();
-        System.out.println("PLAYER " + playerNumber);
-        System.out.println("Please select your character");
-        System.out.println("Digit 0 for Bowman");
-        System.out.println("Digit 1 for Warrior");
-        System.out.println("Digit 2 for Wizard");
-        int selectedCharacter = KEYBOARD.nextInt();
-        while (selectedCharacter < 0 || selectedCharacter > 2) {
-            System.out.println("Invalid digit for character. Try again.");
-            selectedCharacter = KEYBOARD.nextInt();
-        }
-        System.out.println();
-        System.out.println("Please enter your character name");
-        String selectedCharacterName = KEYBOARD.next();
-        return switch (selectedCharacter) {
-            case 0 -> new Bowman(selectedCharacterName, playerNumber);
-            case 1 -> new Warrior(selectedCharacterName, playerNumber);
-            case 2 -> new Wizard(selectedCharacterName, playerNumber);
-            default -> null;
-        };
-    }
-
-    private void manageCharacters() {
-        if (numberOfPlayers == 2) {
-            player1 = chooseCharacter(1);
-            player2 = chooseCharacter(2);
-        }
-    }
-
-    private void displayInfo() {
-        System.out.println();
-        System.out.println("Current state of the board");
-        board.printBoard();
-        System.out.println();
-        displayPlayerInfo(player1);
-        System.out.println();
-        displayPlayerInfo(player2);
-    }
-
-    private void displayPlayerInfo(Character player) {
-        System.out.println(player.getName() + " information (PLAYER " + player.getPlayerNumber() + ")");
-        System.out.println("HP: " + player.getHp());
-        System.out.println("Current attack force: " + player.getAttack());
-        System.out.println("Current defense force: " + player.getCurrentDefense());
-        System.out.println("Current range: " + player.getRange());
     }
 }
