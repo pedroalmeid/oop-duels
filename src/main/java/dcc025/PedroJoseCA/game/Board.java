@@ -61,8 +61,9 @@ public class Board {
         );
     }
 
-    public boolean movePlayer(int playerNumber, String direction) {
+    public boolean askToMovePlayer(int playerNumber, String direction) {
         int[] playerPosition = getPlayerPosition(playerNumber);
+        int enemyNumber = (playerNumber == 1) ? 2 : 1;
         int height = playerPosition[0];
         int width = playerPosition[1];
 

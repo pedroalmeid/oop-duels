@@ -17,15 +17,60 @@ public class Game {
 
     public void start() {
         System.out.println("Welcome to Duels");
+
         selectGameMode();
         manageCharacters();
+
         board = new Board();
         displayInfo();
+
+        play();
+    }
+
+    private void play() {
+        if (numberOfPlayers == 2) {
+            playerActions(player1, player2);
+            playerActions(player2, player1);
+        }
+        displayInfo();
+    }
+
+    private boolean playerActions(Character player, Character enemy) {
+        System.out.println();
+        System.out.println("PLAYER " + player.getPlayerNumber());
+        System.out.println("Please select your next action");
+        System.out.println("Digit 0 to Attack");
+        System.out.println("Digit 1 to Defend");
+        System.out.println("Digit 2 to Move");
+        System.out.println("Digit 3 to Activate Ultimate");
+        System.out.println("Digit 4 to End game");
+        int selectedAction = KEYBOARD.nextInt();
+        while (selectedAction < 0 || selectedAction > 4) {
+            System.out.println("Invalid digit for action. Try again.");
+            selectedAction = KEYBOARD.nextInt();
+        }
+        switch (selectedAction) {
+            case 0:
+                player.attack(board, enemy);
+                break;
+            case 1:
+                player.defend();
+                break;
+            case 2:
+                player.move(board);
+                break;
+            case 3:
+                break;
+            case 4:
+                return false;
+        }
+        return true;
     }
 
     private void selectGameMode() {
         int selectedGameMode;
         do {
+            System.out.println();
             System.out.println("Select a game mode");
             System.out.println("Digit 1 for single player");
             System.out.println("Digit 2 for multiplayer");

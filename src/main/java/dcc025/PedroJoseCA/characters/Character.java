@@ -21,14 +21,19 @@ public class Character {
     }
 
     public void defend() {
+        System.out.println();
+        System.out.println("You defended yourself. Current defense now is " + maxDefense);
         currentDefense = maxDefense;
     }
 
     public void attack(Board currentBoard, Character enemy) {
         int distance = currentBoard.getDistanceBetweenPlayers();
         if (distance > range) {
+            System.out.println();
             System.out.println("Your attack was unsuccessful. Your character has no attack range at this distance");
         } else {
+            System.out.println();
+            System.out.println("You attacked " + enemy.getName());
             enemy.sufferDamage(attack);
         }
     }
@@ -42,12 +47,11 @@ public class Character {
         }
     }
 
-    public void move(Board currentBoard, String direction) {
-        boolean validMove = currentBoard.movePlayer(numberId, direction);
+    public void move(Board currentBoard) {
+        boolean validMove = currentBoard.askToMovePlayer(numberId, "down");
         if (!validMove) {
             System.out.println();
             System.out.println("Your move was unsuccessful because you tried to move beyond the limits of the board");
-            System.out.println();
         }
     }
 
