@@ -104,6 +104,7 @@ public class Game {
                 gameOver(player1, player2);
                 return;
             }
+            playerActions(player2, player1);
             displayInfo();
             play();
         }

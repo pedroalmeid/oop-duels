@@ -51,7 +51,7 @@ public class Character {
             currentDefense = 0;
         }
         System.out.println();
-        System.out.println(name + "lost " + lostDefense + " of defense and " + lostHp + " of hp." );
+        System.out.println(name + " lost " + lostDefense + " of defense and " + lostHp + " of hp." );
     }
 
     public void move(Board currentBoard) {
