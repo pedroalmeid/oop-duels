@@ -10,7 +10,7 @@ public class Warrior extends Character {
         range = 1;
     }
 
-    public void useUltimate() {
+    public void useUltimate(Character enemy) {
         attack = 30;
     }
 }

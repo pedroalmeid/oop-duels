@@ -10,7 +10,7 @@ public class Bowman extends Character {
         range = 5;
     }
 
-    public void useUltimate() {
+    public void useUltimate(Character enemy) {
         range++;
     }
 }

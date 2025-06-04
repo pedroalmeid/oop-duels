@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class Board {
     final Random RANDOM = new Random();
+    final String COLOR_GREEN = "\u001B[32m";
+    final String COLOR_PURPLE = "\u001B[35m";
+    final String COLOR_RESET = "\u001B[0m";
     final int BOARD_SIZE = 10;
 
     private int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
@@ -29,9 +32,18 @@ public class Board {
     }
 
     void printBoard() {
+        System.out.println();
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(board[i][j] + " ");
+                if (board[i][j] == 1) {
+                    System.out.print(COLOR_PURPLE + board[i][j] + COLOR_RESET + " ");
+                }
+                else if (board[i][j] == 2) {
+                    System.out.print(COLOR_GREEN + board[i][j] + COLOR_RESET + " ");
+                }
+                else {
+                    System.out.print(board[i][j] + " ");
+                }
             }
             System.out.println();
         }
@@ -49,22 +61,26 @@ public class Board {
         );
     }
 
-    public boolean movePlayer(int playerNumber, String direction) {
+    public boolean askToMovePlayer(int playerNumber, String direction) {
         int[] playerPosition = getPlayerPosition(playerNumber);
+        int enemyNumber = (playerNumber == 1) ? 2 : 1;
+        int[] enemyPosition = getPlayerPosition(enemyNumber);
+
         int height = playerPosition[0];
         int width = playerPosition[1];
+        int enemyHeight = enemyPosition[0];
+        int enemyWidth = enemyPosition[1];
 
         switch (direction) {
             case "up":
-                if (height - 1 >= 0) {
+                if (height - 1 >= 0 && (height - 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][0]--;
                     board[height-1][width] = playerNumber;
                     return true;
                 }
-                break;
             case "down":
-                if (height + 1 < BOARD_SIZE) {
+                if (height + 1 < BOARD_SIZE && (height + 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][0]++;
                     board[height+1][width] = playerNumber;
@@ -72,7 +88,7 @@ public class Board {
                 }
                 break;
             case "left":
-                if (width - 1 >= 0) {
+                if (width - 1 >= 0 && (height != enemyHeight || width - 1 != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][1]--;
                     board[height][width-1] = playerNumber;
@@ -80,7 +96,7 @@ public class Board {
                 }
                 break;
             case "right":
-                if (width + 1 < BOARD_SIZE) {
+                if (width + 1 < BOARD_SIZE && (height != enemyHeight || width + 1 != enemyWidth)) {
                     board[height][width] = 0;
                     playerPositions[playerNumber - 1][1]++;
                     board[height][width+1] = playerNumber;

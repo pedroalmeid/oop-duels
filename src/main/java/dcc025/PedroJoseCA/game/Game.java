@@ -15,17 +15,22 @@ public class Game {
     private Character player1;
     private Character player2;
 
+    public Game() {
+        board = new Board();
+    }
+
     public void start() {
         System.out.println("Welcome to Duels");
         selectGameMode();
         manageCharacters();
-        board = new Board();
         displayInfo();
+        play();
     }
 
     private void selectGameMode() {
         int selectedGameMode;
         do {
+            System.out.println();
             System.out.println("Select a game mode");
             System.out.println("Digit 1 for single player");
             System.out.println("Digit 2 for multiplayer");
@@ -38,7 +43,15 @@ public class Game {
         numberOfPlayers = selectedGameMode;
     }
 
+    private void manageCharacters() {
+        if (numberOfPlayers == 2) {
+            player1 = chooseCharacter(1);
+            player2 = chooseCharacter(2);
+        }
+    }
+
     private Character chooseCharacter(int playerNumber) {
+        System.out.println();
         System.out.println("PLAYER " + playerNumber);
         System.out.println("Please select your character");
         System.out.println("Digit 0 for Bowman");
@@ -49,6 +62,7 @@ public class Game {
             System.out.println("Invalid digit for character. Try again.");
             selectedCharacter = KEYBOARD.nextInt();
         }
+        System.out.println();
         System.out.println("Please enter your character name");
         String selectedCharacterName = KEYBOARD.next();
         return switch (selectedCharacter) {
@@ -59,17 +73,13 @@ public class Game {
         };
     }
 
-    private void manageCharacters() {
-        if (numberOfPlayers == 2) {
-            player1 = chooseCharacter(1);
-            player2 = chooseCharacter(2);
-        }
-    }
-
     private void displayInfo() {
+        System.out.println();
         System.out.println("Current state of the board");
         board.printBoard();
+        System.out.println();
         displayPlayerInfo(player1);
+        System.out.println();
         displayPlayerInfo(player2);
     }
 
@@ -79,5 +89,69 @@ public class Game {
         System.out.println("Current attack force: " + player.getAttack());
         System.out.println("Current defense force: " + player.getCurrentDefense());
         System.out.println("Current range: " + player.getRange());
+    }
+
+    private void play() {
+        if (numberOfPlayers == 2) {
+            if (!player1.isAlive()) {
+                System.out.println(player1.getName() + " was dead");
+                gameOver(player2, player1);
+                return;
+            }
+            playerActions(player1, player2);
+            if (!player2.isAlive()) {
+                System.out.println(player2.getName() + " was dead");
+                gameOver(player1, player2);
+                return;
+            }
+            playerActions(player2, player1);
+            displayInfo();
+            play();
+        }
+    }
+
+    private void playerActions(Character player, Character enemy) {
+        System.out.println();
+        System.out.println("PLAYER " + player.getPlayerNumber());
+        System.out.println(player.getName() + ", please select your next action:");
+        System.out.println("Digit 0 to Attack");
+        System.out.println("Digit 1 to Defend");
+        System.out.println("Digit 2 to Move");
+        System.out.println("Digit 3 to Activate Ultimate");
+        System.out.println("Digit 4 to End game");
+        int selectedAction = KEYBOARD.nextInt();
+        while (selectedAction < 0 || selectedAction > 4) {
+            System.out.println("Invalid digit for action. Try again.");
+            selectedAction = KEYBOARD.nextInt();
+        }
+        switch (selectedAction) {
+            case 0:
+                player.attack(board, enemy);
+                break;
+            case 1:
+                player.defend();
+                break;
+            case 2:
+                player.move(board);
+                break;
+            case 3:
+                player.useUltimate(enemy);
+                break;
+            case 4:
+                gameOver();
+                break;
+        }
+    }
+
+    private void gameOver() {
+        System.out.println();
+        System.out.println("Forcing end of game as requested");
+    }
+
+    private void gameOver(Character winner, Character loser) {
+        System.out.println();
+        System.out.println("GAME OVER");
+        System.out.println(winner.getName() + " defeated " + loser.getName());
+        System.out.println("Congratulations to PLAYER " + winner.getPlayerNumber() + "!!");
     }
 }
