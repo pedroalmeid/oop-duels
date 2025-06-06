@@ -1,16 +1,19 @@
 package dcc025.PedroJoseCA.characters;
 
+import dcc025.PedroJoseCA.game.Board;
+
 public class Bowman extends Character {
 
-    public Bowman(String givenName, int playerNumber) {
-        super(givenName, playerNumber);
+    public Bowman(String givenName, int playerNumber, Board board) {
+        super(givenName, playerNumber, board);
         attack = 8;
         maxDefense = 5;
         currentDefense = maxDefense;
         range = 5;
+        className = "Bowman";
     }
 
-    public void useUltimate(Character enemy) {
+    public void useUltimate() {
         range++;
     }
 }

@@ -4,16 +4,24 @@ import dcc025.PedroJoseCA.game.Board;
 
 public class Character {
     protected String name;
+    protected String className;
     private int hp = 100;
     protected int attack;
     protected int maxDefense;
     protected int currentDefense;
     protected int range;
     protected int numberId;
+    private Board currentBoard;
+    protected Character enemy;
 
-    protected Character(String givenName, int playerNumber) {
+    protected Character(String givenName, int playerNumber, Board board) {
         name = givenName;
         numberId = playerNumber;
+        currentBoard = board;
+    }
+
+    public void setEnemy(Character givenEnemy) {
+        enemy = givenEnemy;
     }
 
     public int getPlayerNumber() {
@@ -26,7 +34,7 @@ public class Character {
         currentDefense = maxDefense;
     }
 
-    public void attack(Board currentBoard, Character enemy) {
+    public void attack() {
         int distance = currentBoard.getDistanceBetweenPlayers();
         if (distance > range) {
             System.out.println();
@@ -57,7 +65,7 @@ public class Character {
         System.out.println(name + " lost " + lostDefense + " of defense and " + lostHp + " of hp." );
     }
 
-    public void move(Board currentBoard) {
+    public void move() {
         boolean validMove = currentBoard.askToMovePlayer(numberId, "down");
         if (!validMove) {
             System.out.println();
@@ -77,6 +85,8 @@ public class Character {
         return name;
     }
 
+    public String getClassName() { return className; }
+
     public int getAttack() {
         return attack;
     }
@@ -93,5 +103,5 @@ public class Character {
         hp = newHp;
     }
 
-    public void useUltimate(Character enemy) {}
+    public void useUltimate() {}
 }
