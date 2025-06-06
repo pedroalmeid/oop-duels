@@ -2,6 +2,8 @@ package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
 
+import java.util.Scanner;
+
 public class Character {
     protected String name;
     protected String className;
@@ -13,6 +15,7 @@ public class Character {
     protected int numberId;
     private Board currentBoard;
     protected Character enemy;
+    final private Scanner KEYBOARD = new Scanner(System.in);
 
     protected Character(String givenName, int playerNumber, Board board) {
         name = givenName;
@@ -66,7 +69,27 @@ public class Character {
     }
 
     public void move() {
-        boolean validMove = currentBoard.askToMovePlayer(numberId, "down");
+        System.out.println();
+        System.out.println("Please select the direction of your movement");
+        System.out.println("Digit 0 for UP");
+        System.out.println("Digit 1 for DOWN");
+        System.out.println("Digit 2 for LEFT");
+        System.out.println("Digit 3 for RIGHT");
+        int selectedDirection = KEYBOARD.nextInt();
+        while (selectedDirection < 0 || selectedDirection > 3) {
+            System.out.println("Please select a valid direction");
+            selectedDirection = KEYBOARD.nextInt();
+        }
+
+        String direction = switch (selectedDirection) {
+            case 0 -> "up";
+            case 1 -> "down";
+            case 2 -> "left";
+            case 3 -> "right";
+            default -> "none";
+        };
+
+        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
         if (!validMove) {
             System.out.println();
             System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
