@@ -47,6 +47,8 @@ public class Game {
         if (numberOfPlayers == 2) {
             player1 = chooseCharacter(1);
             player2 = chooseCharacter(2);
+            player1.setEnemy(player2);
+            player2.setEnemy(player1);
         }
     }
 
@@ -66,9 +68,9 @@ public class Game {
         System.out.println("Please enter your character name");
         String selectedCharacterName = KEYBOARD.next();
         return switch (selectedCharacter) {
-            case 0 -> new Bowman(selectedCharacterName, playerNumber);
-            case 1 -> new Warrior(selectedCharacterName, playerNumber);
-            case 2 -> new Wizard(selectedCharacterName, playerNumber);
+            case 0 -> new Bowman(selectedCharacterName, playerNumber, board);
+            case 1 -> new Warrior(selectedCharacterName, playerNumber, board);
+            case 2 -> new Wizard(selectedCharacterName, playerNumber, board);
             default -> null;
         };
     }
@@ -85,6 +87,7 @@ public class Game {
 
     private void displayPlayerInfo(Character player) {
         System.out.println(player.getName() + " information (PLAYER " + player.getPlayerNumber() + ")");
+        System.out.println("Class: " + player.getClassName());
         System.out.println("HP: " + player.getHp());
         System.out.println("Current attack force: " + player.getAttack());
         System.out.println("Current defense force: " + player.getCurrentDefense());
@@ -126,16 +129,16 @@ public class Game {
         }
         switch (selectedAction) {
             case 0:
-                player.attack(board, enemy);
+                player.attack();
                 break;
             case 1:
                 player.defend();
                 break;
             case 2:
-                player.move(board);
+                player.move();
                 break;
             case 3:
-                player.useUltimate(enemy);
+                player.useUltimate();
                 break;
             case 4:
                 gameOver();
@@ -146,6 +149,7 @@ public class Game {
     private void gameOver() {
         System.out.println();
         System.out.println("Forcing end of game as requested");
+        System.exit(0);
     }
 
     private void gameOver(Character winner, Character loser) {
