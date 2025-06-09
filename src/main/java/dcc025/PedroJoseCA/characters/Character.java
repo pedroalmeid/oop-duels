@@ -32,8 +32,8 @@ public class Character {
         enemy = givenEnemy;
     }
 
-    public int getPlayerNumber() {
-        return numberId;
+    protected void setHp(int newHp) {
+        hp = newHp;
     }
 
     public void defend() {
@@ -115,12 +115,18 @@ public class Character {
         };
     }
 
-    public int getHp() {
-        return hp;
-    }
+    public void useUltimate() {}
 
     public boolean isAlive() {
         return hp > 0;
+    }
+
+    public int getPlayerNumber() {
+        return numberId;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     public String getName() {
@@ -145,13 +151,7 @@ public class Character {
         return range;
     }
 
-    protected void setHp(int newHp) {
-        hp = newHp;
-    }
-
     public Character getEnemy() {
         return enemy;
     }
-
-    public void useUltimate() {}
 }
