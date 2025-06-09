@@ -1,6 +1,7 @@
 package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
+import dcc025.PedroJoseCA.logs.Message;
 
 public class Warrior extends Character {
 
@@ -15,5 +16,6 @@ public class Warrior extends Character {
 
     public void useUltimate() {
         attack = 30;
+        Message.warriorUltimate(name, attack);
     }
 }

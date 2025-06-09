@@ -109,6 +109,27 @@ public class Message {
         System.out.println("Digit 3 for RIGHT");
     }
 
+    public static void bowmanUltimate(String name, int range) {
+        br();
+        System.out.println(name + " has activated his ultimate");
+        System.out.println("Range updated to " + range);
+        br();
+    }
+
+    public static void warriorUltimate(String name, int attackForce) {
+        br();
+        System.out.println(name + " has activated his ultimate");
+        System.out.println("Attack force updated to " + attackForce);
+        br();
+    }
+
+    public static void wizardUltimate(String name, String enemyName) {
+        br();
+        System.out.println(name + " has activated his ultimate");
+        System.out.println(name + " exchanged his hp with " + enemyName);
+        br();
+    }
+
 }
 
 
