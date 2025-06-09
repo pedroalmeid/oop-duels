@@ -6,6 +6,8 @@ import dcc025.PedroJoseCA.characters.Bowman;
 import dcc025.PedroJoseCA.characters.Character;
 import dcc025.PedroJoseCA.characters.Warrior;
 import dcc025.PedroJoseCA.characters.Wizard;
+import dcc025.PedroJoseCA.logs.Message;
+import dcc025.PedroJoseCA.logs.Warning;
 
 public class Game {
     final private Scanner KEYBOARD = new Scanner(System.in);
@@ -21,7 +23,7 @@ public class Game {
     }
 
     public void start() {
-        System.out.println("Welcome to Duels");
+        Message.welcome();
         selectGameMode();
         manageCharacters();
         displayInfo();
@@ -31,13 +33,10 @@ public class Game {
     private void selectGameMode() {
         int selectedGameMode;
         do {
-            System.out.println();
-            System.out.println("Select a game mode");
-            System.out.println("Digit 1 for single player");
-            System.out.println("Digit 2 for multiplayer");
+            Message.gameModeSelection();
             selectedGameMode = KEYBOARD.nextInt();
             if (selectedGameMode != 1 && selectedGameMode != 2) {
-                System.out.println("Invalid game mode. Try again.");
+                Warning.invalidGameMode();
             }
         } while (selectedGameMode != 1 && selectedGameMode != 2);
 
@@ -59,19 +58,16 @@ public class Game {
     }
 
     private Character chooseCharacter(int playerNumber) {
-        System.out.println();
-        System.out.println("PLAYER " + playerNumber);
-        System.out.println("Please select your character");
-        System.out.println("Digit 0 for Bowman");
-        System.out.println("Digit 1 for Warrior");
-        System.out.println("Digit 2 for Wizard");
+        Message.characterSelection(playerNumber);
+
         int selectedCharacter = KEYBOARD.nextInt();
         while (selectedCharacter < 0 || selectedCharacter > 2) {
-            System.out.println("Invalid digit for character. Try again.");
+            Warning.invalidCharacterDigit();
             selectedCharacter = KEYBOARD.nextInt();
         }
-        System.out.println();
-        System.out.println("Please enter your character name");
+
+        Message.askForCharacterName();
+
         String selectedCharacterName = KEYBOARD.next();
         return switch (selectedCharacter) {
             case 0 -> new Bowman(selectedCharacterName, playerNumber, board);
@@ -82,12 +78,8 @@ public class Game {
     }
 
     private void displayInfo() {
-        System.out.println();
-        System.out.println("Current state of the board");
-        board.printBoard();
-        System.out.println();
+        Message.showBoard(board);
         displayPlayerInfo(player1);
-        System.out.println();
         displayPlayerInfo(player2);
     }
 

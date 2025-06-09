@@ -31,8 +31,7 @@ public class Board {
         return new int[]{randomI, randomJ};
     }
 
-    void printBoard() {
-        System.out.println();
+    public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == 1) {
