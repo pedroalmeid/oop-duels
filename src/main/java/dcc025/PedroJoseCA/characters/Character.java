@@ -71,38 +71,56 @@ public class Character {
     }
 
     public void move() {
+        boolean validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
+
+        while (!validMove) {
+            System.out.println();
+            System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
+            System.out.println("Please, try it again!");
+            validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
+        }
+    }
+
+    public void randomMove() {
+        boolean validMove = currentBoard.askToMovePlayer(numberId, randomSelectDirection());
+        while (!validMove) {
+            validMove = currentBoard.askToMovePlayer(numberId, randomSelectDirection());
+        }
+    }
+
+    private String selectDirection() {
         System.out.println();
         System.out.println("Please select the direction of your movement");
         System.out.println("Digit 0 for UP");
         System.out.println("Digit 1 for DOWN");
         System.out.println("Digit 2 for LEFT");
         System.out.println("Digit 3 for RIGHT");
+
         int selectedDirection = KEYBOARD.nextInt();
+
         while (selectedDirection < 0 || selectedDirection > 3) {
-            System.out.println("Please select a valid direction");
+            System.out.println("Please select a valid direction (between 0 and 3)");
             selectedDirection = KEYBOARD.nextInt();
         }
-        moveByNumber(selectedDirection);
-    }
 
-    public void randomMove() {
-        int randomDirection = RANDOM.nextInt(4);
-        moveByNumber(randomDirection);
-    }
-
-    private void moveByNumber(int directionNumber) {
-        String direction = switch (directionNumber) {
+        return switch (selectedDirection) {
             case 0 -> "up";
             case 1 -> "down";
             case 2 -> "left";
             case 3 -> "right";
             default -> "none";
         };
-        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
-        if (!validMove) {
-            System.out.println();
-            System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
-        }
+    }
+
+    private String randomSelectDirection() {
+        int randomNumber = RANDOM.nextInt(4);
+        return switch (randomNumber) {
+            case 0 -> "up";
+            case 1 -> "down";
+            case 2 -> "left";
+            case 3 -> "right";
+            default -> "none";
+        };
     }
 
     public int getHp() {
