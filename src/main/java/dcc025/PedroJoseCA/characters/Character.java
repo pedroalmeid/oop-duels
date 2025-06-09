@@ -2,9 +2,13 @@ package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Character {
+    final private Scanner KEYBOARD = new Scanner(System.in);
+    final Random RANDOM = new Random();
+
     protected String name;
     protected String className;
     private int hp = 100;
@@ -15,7 +19,6 @@ public class Character {
     protected int numberId;
     private Board currentBoard;
     protected Character enemy;
-    final private Scanner KEYBOARD = new Scanner(System.in);
 
     protected Character(String givenName, int playerNumber, Board board) {
         name = givenName;
@@ -80,15 +83,22 @@ public class Character {
             System.out.println("Please select a valid direction");
             selectedDirection = KEYBOARD.nextInt();
         }
+        moveByNumber(selectedDirection);
+    }
 
-        String direction = switch (selectedDirection) {
+    public void randomMove() {
+        int randomDirection = RANDOM.nextInt(4);
+        moveByNumber(randomDirection);
+    }
+
+    private void moveByNumber(int directionNumber) {
+        String direction = switch (directionNumber) {
             case 0 -> "up";
             case 1 -> "down";
             case 2 -> "left";
             case 3 -> "right";
             default -> "none";
         };
-
         boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
         if (!validMove) {
             System.out.println();

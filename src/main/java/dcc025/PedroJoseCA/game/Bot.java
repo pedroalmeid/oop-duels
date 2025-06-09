@@ -18,7 +18,7 @@ public class Bot {
 
     public Character setRandomCharacter() {
         int randomNumber = RANDOM.nextInt(3);
-        String botName = "BOT " + randomNumber;
+        String botName = "BOT";
         character = switch (randomNumber) {
             case 0 -> new Bowman(botName, 2, currentBoard);
             case 1 -> new Warrior(botName, 2, currentBoard);
@@ -26,6 +26,21 @@ public class Bot {
             default -> null;
         };
         return character;
+    }
+
+    public void behave() {
+        if (character.getHp() <= 35) {
+            character.defend();
+        }
+        else if (character.getHp() <= 50) {
+            character.useUltimate();
+        }
+        else if (currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
+            character.attack();
+        }
+        else {
+            character.randomMove();
+        }
     }
 
 }

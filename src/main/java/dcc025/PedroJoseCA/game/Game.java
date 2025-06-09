@@ -101,22 +101,25 @@ public class Game {
     }
 
     private void play() {
-        if (numberOfPlayers == 2) {
-            if (!player1.isAlive()) {
-                System.out.println(player1.getName() + " was dead");
-                gameOver(player2, player1);
-                return;
-            }
-            playerActions(player1);
-            if (!player2.isAlive()) {
-                System.out.println(player2.getName() + " was dead");
-                gameOver(player1, player2);
-                return;
-            }
-            playerActions(player2);
-            displayInfo();
-            play();
+        if (!player1.isAlive()) {
+            System.out.println(player1.getName() + " was dead");
+            gameOver(player2, player1);
+            return;
         }
+        playerActions(player1);
+        if (!player2.isAlive()) {
+            System.out.println(player2.getName() + " was dead");
+            gameOver(player1, player2);
+            return;
+        }
+        if (numberOfPlayers == 2) {
+            playerActions(player2);
+        }
+        else if (numberOfPlayers == 1) {
+            bot.behave();
+        }
+        displayInfo();
+        play();
     }
 
     private void playerActions(Character player) {
