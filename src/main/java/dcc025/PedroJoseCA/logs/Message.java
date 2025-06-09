@@ -1,6 +1,7 @@
 package dcc025.PedroJoseCA.logs;
 
 import dcc025.PedroJoseCA.game.Board;
+import dcc025.PedroJoseCA.characters.Character;
 
 public class Message {
     static void br() {
@@ -39,6 +40,46 @@ public class Message {
         System.out.println("CURRENT BOARD");
         board.printBoard();
         br();
+    }
+
+    public static void playerInfo(Character player) {
+        br();
+        System.out.println(player.getName() + " information (PLAYER " + player.getPlayerNumber() + ")");
+        System.out.println("Class: " + player.getClassName());
+        System.out.println("HP: " + player.getHp());
+        System.out.println("Current attack force: " + player.getAttack());
+        System.out.println("Current defense force: " + player.getCurrentDefense());
+        System.out.println("Current range: " + player.getRange());
+        br();
+    }
+
+    public static void death(String playerName) {
+        br();
+        System.out.println(playerName + " was dead!");
+    }
+
+    public static void askForAction(Character player) {
+        br();
+        System.out.println("PLAYER " + player.getPlayerNumber());
+        System.out.println(player.getName() + ", please select your next action:");
+        System.out.println("Digit 0 to Attack");
+        System.out.println("Digit 1 to Defend");
+        System.out.println("Digit 2 to Move");
+        System.out.println("Digit 3 to Activate Ultimate");
+        System.out.println("Digit 4 to End game");
+    }
+
+    public static void gameOver(Character winner, Character loser) {
+        br();
+        System.out.println("================");
+        System.out.println("GAMER OVER");
+        System.out.println("===============");
+        System.out.println(winner.getName() + " defeated " + loser.getName());
+        System.out.println("Congratulations to PLAYER " + winner.getPlayerNumber() + "!!");
+    }
+
+    public static void askForNewGame() {
+        System.out.println("Do you wanna play again? Digit 1 for YES and 0 for NO");
     }
 
 }
