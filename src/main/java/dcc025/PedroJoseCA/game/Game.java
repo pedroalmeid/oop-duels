@@ -14,6 +14,7 @@ public class Game {
     private Board board;
     private Character player1;
     private Character player2;
+    private Bot bot = null;
 
     public Game() {
         board = new Board();
@@ -47,9 +48,14 @@ public class Game {
         if (numberOfPlayers == 2) {
             player1 = chooseCharacter(1);
             player2 = chooseCharacter(2);
-            player1.setEnemy(player2);
-            player2.setEnemy(player1);
         }
+        else if (numberOfPlayers == 1) {
+            player1 = chooseCharacter(1);
+            bot = new Bot(board);
+            player2 = bot.setRandomCharacter();
+        }
+        player1.setEnemy(player2);
+        player2.setEnemy(player1);
     }
 
     private Character chooseCharacter(int playerNumber) {
@@ -101,19 +107,19 @@ public class Game {
                 gameOver(player2, player1);
                 return;
             }
-            playerActions(player1, player2);
+            playerActions(player1);
             if (!player2.isAlive()) {
                 System.out.println(player2.getName() + " was dead");
                 gameOver(player1, player2);
                 return;
             }
-            playerActions(player2, player1);
+            playerActions(player2);
             displayInfo();
             play();
         }
     }
 
-    private void playerActions(Character player, Character enemy) {
+    private void playerActions(Character player) {
         System.out.println();
         System.out.println("PLAYER " + player.getPlayerNumber());
         System.out.println(player.getName() + ", please select your next action:");
