@@ -32,13 +32,13 @@ public class Bot {
         if (character.getEnemy().getHp() <= character.getAttack() && currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
             character.attack(); // Kill enemy if it's possible
         }
-        else if (character.getHp() <= 8) {
+        else if (character.getHp() <= 18) {
             character.useUltimate(); // Use ultimate at low hp (good for Wizard)
         }
         else if (currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
             character.attack(); // Attack enemy if it's possible because of positions
         }
-        else if (character.getHp() <= 25 && character.getCurrentDefense() < character.getMaxDefense()) {
+        else if (character.getHp() <= 40 && character.getCurrentDefense() < character.getMaxDefense()) {
             character.defend(); // Defend to avoid death
         }
         else if (character.getHp() == 100 && character.getEnemy().getHp() == 100) {

@@ -166,5 +166,18 @@ public class Game {
         System.out.println("GAME OVER");
         System.out.println(winner.getName() + " defeated " + loser.getName());
         System.out.println("Congratulations to PLAYER " + winner.getPlayerNumber() + "!!");
+        System.out.println("Do you wanna play again? Digit 1 for YES and 0 for NO");
+        int selectedOption = KEYBOARD.nextInt();
+        while (selectedOption < 0 || selectedOption > 1) {
+            System.out.println("Invalid digit for option. Try again.");
+        }
+        switch (selectedOption) {
+            case 0:
+                System.exit(0);
+                break;
+            case 1:
+                start();
+                break;
+        }
     }
 }
