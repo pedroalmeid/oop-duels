@@ -11,6 +11,7 @@ public class Bot {
     final Random RANDOM = new Random();
     private Board currentBoard;
     private Character character;
+    boolean usedUltimatedAtLowHp = false;
 
     public Bot(Board board) {
         currentBoard = board;
@@ -32,7 +33,8 @@ public class Bot {
         if (character.getEnemy().getHp() <= character.getAttack() && currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
             character.attack(); // Kill enemy if it's possible
         }
-        else if (character.getHp() <= 18) {
+        else if (character.getHp() <= 18 && !usedUltimatedAtLowHp) {
+            usedUltimatedAtLowHp = true;
             character.useUltimate(); // Use ultimate at low hp (good for Wizard)
         }
         else if (currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {

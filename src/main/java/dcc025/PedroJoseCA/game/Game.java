@@ -84,13 +84,13 @@ public class Game {
     }
 
     private void play() {
-        if (!player1.isAlive()) {
+        if (player1.isDead()) {
             Message.death(player1.getName());
             gameOver(player2, player1);
             return;
         }
         playerActions(player1);
-        if (!player2.isAlive()) {
+        if (player2.isDead()) {
             Message.death(player2.getName());
             gameOver(player1, player2);
             return;

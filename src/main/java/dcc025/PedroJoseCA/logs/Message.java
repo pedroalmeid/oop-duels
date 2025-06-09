@@ -39,7 +39,6 @@ public class Message {
         br();
         System.out.println("CURRENT BOARD");
         board.printBoard();
-        br();
     }
 
     public static void playerInfo(Character player) {
@@ -50,7 +49,6 @@ public class Message {
         System.out.println("Current attack force: " + player.getAttack());
         System.out.println("Current defense force: " + player.getCurrentDefense());
         System.out.println("Current range: " + player.getRange());
-        br();
     }
 
     public static void death(String playerName) {
@@ -79,25 +77,23 @@ public class Message {
     }
 
     public static void askForNewGame() {
+        br();
         System.out.println("Do you wanna play again? Digit 1 for YES and 0 for NO");
     }
 
     public static void defense(String name, int maxDefense) {
         br();
         System.out.println(name + " defended. Current defense now is " + maxDefense);
-        br();
     }
 
     public static void attack(String name, String enemyName) {
         br();
         System.out.println(name + " attacked " + enemyName);
-        br();
     }
 
     public static void damage(String name, int defense, int hp) {
         br();
         System.out.println(name + " lost " + defense + " of defense and " + hp + " of hp." );
-        br();
     }
 
     public static void askForDirection() {
@@ -109,25 +105,27 @@ public class Message {
         System.out.println("Digit 3 for RIGHT");
     }
 
+    public static void movement(String name, String direction) {
+        br();
+        System.out.println(name + " moved on " + direction + " direction.");
+    }
+
     public static void bowmanUltimate(String name, int range) {
         br();
-        System.out.println(name + " has activated his ultimate");
+        System.out.println(name + " has activated his ultimate.");
         System.out.println("Range updated to " + range);
-        br();
     }
 
     public static void warriorUltimate(String name, int attackForce) {
         br();
         System.out.println(name + " has activated his ultimate");
         System.out.println("Attack force updated to " + attackForce);
-        br();
     }
 
     public static void wizardUltimate(String name, String enemyName) {
         br();
         System.out.println(name + " has activated his ultimate");
         System.out.println(name + " exchanged his hp with " + enemyName);
-        br();
     }
 
 }

@@ -70,12 +70,16 @@ public class Character {
     }
 
     public void move() {
-        boolean validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
+        String direction = selectDirection();
+        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
 
         while (!validMove) {
             Warning.invalidMove(name);
-            validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
+            direction = selectDirection();
+            validMove = currentBoard.askToMovePlayer(numberId, direction);
         }
+
+        Message.movement(name, direction);
     }
 
     public void randomMove() {
@@ -117,8 +121,8 @@ public class Character {
 
     public void useUltimate() {}
 
-    public boolean isAlive() {
-        return hp > 0;
+    public boolean isDead() {
+        return hp == 0;
     }
 
     public int getPlayerNumber() {
