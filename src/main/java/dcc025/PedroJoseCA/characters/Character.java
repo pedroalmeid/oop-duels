@@ -1,10 +1,16 @@
 package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
+import dcc025.PedroJoseCA.logs.Message;
+import dcc025.PedroJoseCA.logs.Warning;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Character {
+    final private Scanner KEYBOARD = new Scanner(System.in);
+    final Random RANDOM = new Random();
+
     protected String name;
     protected String className;
     private int hp = 100;
@@ -15,7 +21,6 @@ public class Character {
     protected int numberId;
     private Board currentBoard;
     protected Character enemy;
-    final private Scanner KEYBOARD = new Scanner(System.in);
 
     protected Character(String givenName, int playerNumber, Board board) {
         name = givenName;
@@ -27,24 +32,21 @@ public class Character {
         enemy = givenEnemy;
     }
 
-    public int getPlayerNumber() {
-        return numberId;
+    protected void setHp(int newHp) {
+        hp = newHp;
     }
 
     public void defend() {
-        System.out.println();
-        System.out.println(name + " defended. Current defense now is " + maxDefense);
+        Message.defense(name, maxDefense);
         currentDefense = maxDefense;
     }
 
     public void attack() {
         int distance = currentBoard.getDistanceBetweenPlayers();
         if (distance > range) {
-            System.out.println();
-            System.out.println(name + "'s attack was unsuccessful. The character has no attack range at this distance");
+            Warning.missedAttack(name);
         } else {
-            System.out.println();
-            System.out.println(name + " attacked " + enemy.getName());
+            Message.attack(name, enemy.getName());
             enemy.sufferDamage(attack);
         }
     }
@@ -64,44 +66,74 @@ public class Character {
             lostHp = attackDamage - currentDefense;
             currentDefense = 0;
         }
-        System.out.println();
-        System.out.println(name + " lost " + lostDefense + " of defense and " + lostHp + " of hp." );
+        Message.damage(name, lostDefense, lostHp);
     }
 
     public void move() {
-        System.out.println();
-        System.out.println("Please select the direction of your movement");
-        System.out.println("Digit 0 for UP");
-        System.out.println("Digit 1 for DOWN");
-        System.out.println("Digit 2 for LEFT");
-        System.out.println("Digit 3 for RIGHT");
+        String direction = selectDirection();
+        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
+
+        while (!validMove) {
+            Warning.invalidMove(name);
+            direction = selectDirection();
+            validMove = currentBoard.askToMovePlayer(numberId, direction);
+        }
+
+        Message.movement(name, direction);
+    }
+
+    public void randomMove() {
+        String direction = randomSelectDirection();
+        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
+        while (!validMove) {
+            direction = randomSelectDirection();
+            validMove = currentBoard.askToMovePlayer(numberId, direction);
+        }
+        Message.movement(name, direction);
+    }
+
+    private String selectDirection() {
+        Message.askForDirection();
+
         int selectedDirection = KEYBOARD.nextInt();
+
         while (selectedDirection < 0 || selectedDirection > 3) {
-            System.out.println("Please select a valid direction");
+            Warning.invalidDigit("direction");
             selectedDirection = KEYBOARD.nextInt();
         }
 
-        String direction = switch (selectedDirection) {
+        return switch (selectedDirection) {
             case 0 -> "up";
             case 1 -> "down";
             case 2 -> "left";
             case 3 -> "right";
             default -> "none";
         };
+    }
 
-        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
-        if (!validMove) {
-            System.out.println();
-            System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
-        }
+    private String randomSelectDirection() {
+        int randomNumber = RANDOM.nextInt(4);
+        return switch (randomNumber) {
+            case 0 -> "up";
+            case 1 -> "down";
+            case 2 -> "left";
+            case 3 -> "right";
+            default -> "none";
+        };
+    }
+
+    public void useUltimate() {}
+
+    public boolean isDead() {
+        return hp == 0;
+    }
+
+    public int getPlayerNumber() {
+        return numberId;
     }
 
     public int getHp() {
         return hp;
-    }
-
-    public boolean isAlive() {
-        return hp > 0;
     }
 
     public String getName() {
@@ -118,13 +150,15 @@ public class Character {
         return currentDefense;
     }
 
+    public int getMaxDefense() {
+        return maxDefense;
+    }
+
     public int getRange() {
         return range;
     }
 
-    protected void setHp(int newHp) {
-        hp = newHp;
+    public Character getEnemy() {
+        return enemy;
     }
-
-    public void useUltimate() {}
 }

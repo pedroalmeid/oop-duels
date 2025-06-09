@@ -1,5 +1,7 @@
 package dcc025.PedroJoseCA.game;
 
+import dcc025.PedroJoseCA.logs.Message;
+
 import java.util.Random;
 
 public class Board {
@@ -31,15 +33,14 @@ public class Board {
         return new int[]{randomI, randomJ};
     }
 
-    void printBoard() {
-        System.out.println();
+    public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == 1) {
-                    System.out.print(COLOR_PURPLE + board[i][j] + COLOR_RESET + " ");
+                    System.out.print(Message.COLOR_CYAN + board[i][j] + Message.COLOR_RESET + " ");
                 }
                 else if (board[i][j] == 2) {
-                    System.out.print(COLOR_GREEN + board[i][j] + COLOR_RESET + " ");
+                    System.out.print(Message.COLOR_PURPLE + board[i][j] + Message.COLOR_RESET + " ");
                 }
                 else {
                     System.out.print(board[i][j] + " ");
@@ -79,6 +80,7 @@ public class Board {
                     board[height-1][width] = playerNumber;
                     return true;
                 }
+                break;
             case "down":
                 if (height + 1 < BOARD_SIZE && (height + 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;

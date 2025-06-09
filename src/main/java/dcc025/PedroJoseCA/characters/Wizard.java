@@ -1,6 +1,7 @@
 package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
+import dcc025.PedroJoseCA.logs.Message;
 
 public class Wizard extends Character {
 
@@ -15,7 +16,8 @@ public class Wizard extends Character {
 
     public void useUltimate() {
         int enemyHp = enemy.getHp();
-        enemy.setHp(this.getHp());
-        this.setHp(enemyHp);
+        enemy.setHp(getHp());
+        setHp(enemyHp);
+        Message.wizardUltimate(name, enemy.getName());
     }
 }
