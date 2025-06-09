@@ -82,6 +82,33 @@ public class Message {
         System.out.println("Do you wanna play again? Digit 1 for YES and 0 for NO");
     }
 
+    public static void defense(String name, int maxDefense) {
+        br();
+        System.out.println(name + " defended. Current defense now is " + maxDefense);
+        br();
+    }
+
+    public static void attack(String name, String enemyName) {
+        br();
+        System.out.println(name + " attacked " + enemyName);
+        br();
+    }
+
+    public static void damage(String name, int defense, int hp) {
+        br();
+        System.out.println(name + " lost " + defense + " of defense and " + hp + " of hp." );
+        br();
+    }
+
+    public static void askForDirection() {
+        br();
+        System.out.println("Please select the direction of your movement");
+        System.out.println("Digit 0 for UP");
+        System.out.println("Digit 1 for DOWN");
+        System.out.println("Digit 2 for LEFT");
+        System.out.println("Digit 3 for RIGHT");
+    }
+
 }
 
 

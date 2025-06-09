@@ -1,6 +1,8 @@
 package dcc025.PedroJoseCA.characters;
 
 import dcc025.PedroJoseCA.game.Board;
+import dcc025.PedroJoseCA.logs.Message;
+import dcc025.PedroJoseCA.logs.Warning;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -35,19 +37,16 @@ public class Character {
     }
 
     public void defend() {
-        System.out.println();
-        System.out.println(name + " defended. Current defense now is " + maxDefense);
+        Message.defense(name, maxDefense);
         currentDefense = maxDefense;
     }
 
     public void attack() {
         int distance = currentBoard.getDistanceBetweenPlayers();
         if (distance > range) {
-            System.out.println();
-            System.out.println(name + "'s attack was unsuccessful. The character has no attack range at this distance");
+            Warning.missedAttack(name);
         } else {
-            System.out.println();
-            System.out.println(name + " attacked " + enemy.getName());
+            Message.attack(name, enemy.getName());
             enemy.sufferDamage(attack);
         }
     }
@@ -67,16 +66,14 @@ public class Character {
             lostHp = attackDamage - currentDefense;
             currentDefense = 0;
         }
-        System.out.println(name + " lost " + lostDefense + " of defense and " + lostHp + " of hp." );
+        Message.damage(name, lostDefense, lostHp);
     }
 
     public void move() {
         boolean validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
 
         while (!validMove) {
-            System.out.println();
-            System.out.println(name + "'s move was unsuccessful because it tried to move beyond the limits of the board or to the enemy's position");
-            System.out.println("Please, try it again!");
+            Warning.invalidMove(name);
             validMove = currentBoard.askToMovePlayer(numberId, selectDirection());
         }
     }
@@ -89,17 +86,12 @@ public class Character {
     }
 
     private String selectDirection() {
-        System.out.println();
-        System.out.println("Please select the direction of your movement");
-        System.out.println("Digit 0 for UP");
-        System.out.println("Digit 1 for DOWN");
-        System.out.println("Digit 2 for LEFT");
-        System.out.println("Digit 3 for RIGHT");
+        Message.askForDirection();
 
         int selectedDirection = KEYBOARD.nextInt();
 
         while (selectedDirection < 0 || selectedDirection > 3) {
-            System.out.println("Please select a valid direction (between 0 and 3)");
+            Warning.invalidDigit("direction");
             selectedDirection = KEYBOARD.nextInt();
         }
 
