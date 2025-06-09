@@ -67,7 +67,6 @@ public class Character {
             lostHp = attackDamage - currentDefense;
             currentDefense = 0;
         }
-        System.out.println();
         System.out.println(name + " lost " + lostDefense + " of defense and " + lostHp + " of hp." );
     }
 
@@ -128,12 +127,20 @@ public class Character {
         return currentDefense;
     }
 
+    public int getMaxDefense() {
+        return maxDefense;
+    }
+
     public int getRange() {
         return range;
     }
 
     protected void setHp(int newHp) {
         hp = newHp;
+    }
+
+    public Character getEnemy() {
+        return enemy;
     }
 
     public void useUltimate() {}

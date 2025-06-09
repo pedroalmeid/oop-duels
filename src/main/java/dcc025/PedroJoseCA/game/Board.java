@@ -79,6 +79,7 @@ public class Board {
                     board[height-1][width] = playerNumber;
                     return true;
                 }
+                break;
             case "down":
                 if (height + 1 < BOARD_SIZE && (height + 1 != enemyHeight || width != enemyWidth)) {
                     board[height][width] = 0;

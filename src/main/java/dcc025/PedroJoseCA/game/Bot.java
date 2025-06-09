@@ -29,18 +29,23 @@ public class Bot {
     }
 
     public void behave() {
-        if (character.getHp() <= 35) {
-            character.defend();
+        if (character.getEnemy().getHp() <= character.getAttack() && currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
+            character.attack(); // Kill enemy if it's possible
         }
-        else if (character.getHp() <= 50) {
-            character.useUltimate();
+        else if (character.getHp() <= 8) {
+            character.useUltimate(); // Use ultimate at low hp (good for Wizard)
         }
         else if (currentBoard.getDistanceBetweenPlayers() <= character.getRange()) {
-            character.attack();
+            character.attack(); // Attack enemy if it's possible because of positions
+        }
+        else if (character.getHp() <= 25 && character.getCurrentDefense() < character.getMaxDefense()) {
+            character.defend(); // Defend to avoid death
+        }
+        else if (character.getHp() == 100 && character.getEnemy().getHp() == 100) {
+            character.useUltimate(); // Activate ultimate at start to improve attack force or range (good for Bowman and Warrior)
         }
         else {
-            character.randomMove();
+            character.randomMove(); // Move randomly to try to approximate or run from the enemy (randomness factor)
         }
     }
-
 }
