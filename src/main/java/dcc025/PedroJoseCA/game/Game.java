@@ -148,6 +148,7 @@ public class Game {
         }
         switch (selectedOption) {
             case 0:
+                Warning.forcedEnd();
                 System.exit(0);
                 break;
             case 1:

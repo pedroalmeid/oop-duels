@@ -1,5 +1,7 @@
 package dcc025.PedroJoseCA.game;
 
+import dcc025.PedroJoseCA.logs.Message;
+
 import java.util.Random;
 
 public class Board {
@@ -35,10 +37,10 @@ public class Board {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == 1) {
-                    System.out.print(COLOR_PURPLE + board[i][j] + COLOR_RESET + " ");
+                    System.out.print(Message.COLOR_CYAN + board[i][j] + Message.COLOR_RESET + " ");
                 }
                 else if (board[i][j] == 2) {
-                    System.out.print(COLOR_GREEN + board[i][j] + COLOR_RESET + " ");
+                    System.out.print(Message.COLOR_PURPLE + board[i][j] + Message.COLOR_RESET + " ");
                 }
                 else {
                     System.out.print(board[i][j] + " ");

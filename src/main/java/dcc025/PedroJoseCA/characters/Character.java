@@ -83,10 +83,13 @@ public class Character {
     }
 
     public void randomMove() {
-        boolean validMove = currentBoard.askToMovePlayer(numberId, randomSelectDirection());
+        String direction = randomSelectDirection();
+        boolean validMove = currentBoard.askToMovePlayer(numberId, direction);
         while (!validMove) {
-            validMove = currentBoard.askToMovePlayer(numberId, randomSelectDirection());
+            direction = randomSelectDirection();
+            validMove = currentBoard.askToMovePlayer(numberId, direction);
         }
+        Message.movement(name, direction);
     }
 
     private String selectDirection() {
