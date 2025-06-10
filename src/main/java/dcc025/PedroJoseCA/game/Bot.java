@@ -5,10 +5,9 @@ import dcc025.PedroJoseCA.characters.Bowman;
 import dcc025.PedroJoseCA.characters.Warrior;
 import dcc025.PedroJoseCA.characters.Wizard;
 
-import java.util.Random;
+import static dcc025.PedroJoseCA.game.Game.RANDOM;
 
 public class Bot {
-    final Random RANDOM = new Random();
     private Board currentBoard;
     private Character character;
     boolean usedUltimatedAtLowHp = false;

@@ -4,13 +4,10 @@ import dcc025.PedroJoseCA.game.Board;
 import dcc025.PedroJoseCA.logs.Message;
 import dcc025.PedroJoseCA.logs.Warning;
 
-import java.util.Random;
-import java.util.Scanner;
+import static dcc025.PedroJoseCA.game.Game.KEYBOARD;
+import static dcc025.PedroJoseCA.game.Game.RANDOM;
 
 public class Character {
-    final private Scanner KEYBOARD = new Scanner(System.in);
-    final Random RANDOM = new Random();
-
     protected String name;
     protected String className;
     private int hp = 100;

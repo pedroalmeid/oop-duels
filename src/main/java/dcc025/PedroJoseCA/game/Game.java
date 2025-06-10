@@ -1,5 +1,6 @@
 package dcc025.PedroJoseCA.game;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import dcc025.PedroJoseCA.characters.Bowman;
@@ -10,13 +11,14 @@ import dcc025.PedroJoseCA.logs.Message;
 import dcc025.PedroJoseCA.logs.Warning;
 
 public class Game {
-    final private Scanner KEYBOARD = new Scanner(System.in);
+    final public static Scanner KEYBOARD = new Scanner(System.in);
+    final public static Random RANDOM = new Random();
 
     private int numberOfPlayers;
     private Board board;
     private Character player1;
     private Character player2;
-    private Bot bot = null;
+    private Bot bot;
 
     public Game() {
         board = new Board();
@@ -24,6 +26,7 @@ public class Game {
 
     public void start() {
         Message.welcome();
+
         selectGameMode();
         manageCharacters();
         displayInfo();
