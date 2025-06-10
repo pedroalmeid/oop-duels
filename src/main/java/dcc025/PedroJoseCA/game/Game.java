@@ -31,12 +31,20 @@ public class Game {
     }
 
     private void selectGameMode() {
-        int selectedGameMode;
+        int selectedGameMode = 0;
+        String input;
         do {
             Message.gameModeSelection();
-            selectedGameMode = KEYBOARD.nextInt();
+            input = KEYBOARD.nextLine();
+            try {
+                selectedGameMode = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("game mode");
+                continue;
+            }
             if (selectedGameMode != 1 && selectedGameMode != 2) {
-                Warning.invalidGameMode();
+                Warning.invalidDigit("game mode");
             }
         } while (selectedGameMode != 1 && selectedGameMode != 2);
 
@@ -58,13 +66,21 @@ public class Game {
     }
 
     private Character chooseCharacter(int playerNumber) {
-        Message.characterSelection(playerNumber);
-
-        int selectedCharacter = KEYBOARD.nextInt();
-        while (selectedCharacter < 0 || selectedCharacter > 2) {
-            Warning.invalidDigit("character");
-            selectedCharacter = KEYBOARD.nextInt();
-        }
+        int selectedCharacter = -1;
+        do {
+            Message.characterSelection(playerNumber);
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedCharacter = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("character");
+                continue;
+            }
+            if (selectedCharacter < 0 || selectedCharacter > 2) {
+                Warning.invalidDigit("character");
+            }
+        } while (selectedCharacter < 0 || selectedCharacter > 2);
 
         Message.askForCharacterName();
 
@@ -106,13 +122,22 @@ public class Game {
     }
 
     private void playerActions(Character player) {
-        Message.askForAction(player);
+        int selectedAction = -1;
+        do {
+            Message.askForAction(player);
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedAction = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("action");
+                continue;
+            }
+            if (selectedAction < 0 || selectedAction > 4) {
+                Warning.invalidDigit("action");
+            }
+        } while (selectedAction < 0 || selectedAction > 4);
 
-        int selectedAction = KEYBOARD.nextInt();
-        while (selectedAction < 0 || selectedAction > 4) {
-            Warning.invalidDigit("action");
-            selectedAction = KEYBOARD.nextInt();
-        }
         switch (selectedAction) {
             case 0:
                 player.attack();
