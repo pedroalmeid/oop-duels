@@ -2,32 +2,28 @@ package dcc025.PedroJoseCA.game;
 
 import dcc025.PedroJoseCA.logs.Message;
 
-import java.util.Random;
+import static dcc025.PedroJoseCA.game.Game.RANDOM;
 
 public class Board {
-    final Random RANDOM = new Random();
-    final String COLOR_GREEN = "\u001B[32m";
-    final String COLOR_PURPLE = "\u001B[35m";
-    final String COLOR_RESET = "\u001B[0m";
-    final int BOARD_SIZE = 10;
+    final private int BOARD_SIZE = 10;
 
     private int [][] board = new int[BOARD_SIZE][BOARD_SIZE];
     private int [][] playerPositions = new int [2][2];
 
     Board() {
-        int[] firstRandomPosition = getRandomCoordinate();
+        int[] firstRandomPosition = generateRandomCoordinate();
         board[firstRandomPosition[0]][firstRandomPosition[1]] = 1;
         playerPositions[0] = firstRandomPosition;
 
-        int [] secondRandomPosition = getRandomCoordinate();
+        int [] secondRandomPosition = generateRandomCoordinate();
         while (secondRandomPosition == firstRandomPosition) {
-            secondRandomPosition = getRandomCoordinate();
+            secondRandomPosition = generateRandomCoordinate();
         }
         board[secondRandomPosition[0]][secondRandomPosition[1]] = 2;
         playerPositions[1] = secondRandomPosition;
     }
 
-    private int[] getRandomCoordinate() {
+    private int[] generateRandomCoordinate() {
         int randomI = RANDOM.nextInt(BOARD_SIZE);
         int randomJ = RANDOM.nextInt(BOARD_SIZE);
         return new int[]{randomI, randomJ};

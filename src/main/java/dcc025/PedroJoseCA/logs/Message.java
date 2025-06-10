@@ -4,12 +4,11 @@ import dcc025.PedroJoseCA.game.Board;
 import dcc025.PedroJoseCA.characters.Character;
 
 public class Message {
-    public static final String COLOR_GREEN = "\u001B[32m";
-    public static final String COLOR_RED = "\u001b[31m";
+    static final String COLOR_GREEN = "\u001B[32m";
+    static final String COLOR_RED = "\u001b[31m";
     public static final String COLOR_PURPLE = "\u001B[35m";
     public static final String COLOR_CYAN = "\u001b[36m";
     public static final String COLOR_RESET = "\u001B[0m";
-
 
     static void br() {
         System.out.println();

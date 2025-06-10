@@ -3,12 +3,6 @@ package dcc025.PedroJoseCA.logs;
 import static dcc025.PedroJoseCA.logs.Message.*;
 
 public class Warning {
-    public static void invalidGameMode() {
-        System.out.print(COLOR_RED);
-        System.out.println("Invalid game mode. Try again.");
-        System.out.print(COLOR_RESET);
-    }
-
     public static void invalidDigit(String context) {
         System.out.print(COLOR_RED);
         System.out.println("Invalid digit for " + context + ". Try again.");

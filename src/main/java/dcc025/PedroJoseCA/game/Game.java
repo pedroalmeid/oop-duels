@@ -1,5 +1,6 @@
 package dcc025.PedroJoseCA.game;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import dcc025.PedroJoseCA.characters.Bowman;
@@ -10,13 +11,14 @@ import dcc025.PedroJoseCA.logs.Message;
 import dcc025.PedroJoseCA.logs.Warning;
 
 public class Game {
-    final private Scanner KEYBOARD = new Scanner(System.in);
+    final public static Scanner KEYBOARD = new Scanner(System.in);
+    final public static Random RANDOM = new Random();
 
     private int numberOfPlayers;
     private Board board;
     private Character player1;
     private Character player2;
-    private Bot bot = null;
+    private Bot bot;
 
     public Game() {
         board = new Board();
@@ -24,6 +26,7 @@ public class Game {
 
     public void start() {
         Message.welcome();
+
         selectGameMode();
         manageCharacters();
         displayInfo();
@@ -31,12 +34,19 @@ public class Game {
     }
 
     private void selectGameMode() {
-        int selectedGameMode;
+        int selectedGameMode = 0;
         do {
             Message.gameModeSelection();
-            selectedGameMode = KEYBOARD.nextInt();
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedGameMode = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("game mode");
+                continue;
+            }
             if (selectedGameMode != 1 && selectedGameMode != 2) {
-                Warning.invalidGameMode();
+                Warning.invalidDigit("game mode");
             }
         } while (selectedGameMode != 1 && selectedGameMode != 2);
 
@@ -58,17 +68,25 @@ public class Game {
     }
 
     private Character chooseCharacter(int playerNumber) {
-        Message.characterSelection(playerNumber);
-
-        int selectedCharacter = KEYBOARD.nextInt();
-        while (selectedCharacter < 0 || selectedCharacter > 2) {
-            Warning.invalidDigit("character");
-            selectedCharacter = KEYBOARD.nextInt();
-        }
+        int selectedCharacter = -1;
+        do {
+            Message.characterSelection(playerNumber);
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedCharacter = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("character");
+                continue;
+            }
+            if (selectedCharacter < 0 || selectedCharacter > 2) {
+                Warning.invalidDigit("character");
+            }
+        } while (selectedCharacter < 0 || selectedCharacter > 2);
 
         Message.askForCharacterName();
 
-        String selectedCharacterName = KEYBOARD.next();
+        String selectedCharacterName = KEYBOARD.nextLine();
         return switch (selectedCharacter) {
             case 0 -> new Bowman(selectedCharacterName, playerNumber, board);
             case 1 -> new Warrior(selectedCharacterName, playerNumber, board);
@@ -106,13 +124,22 @@ public class Game {
     }
 
     private void playerActions(Character player) {
-        Message.askForAction(player);
+        int selectedAction = -1;
+        do {
+            Message.askForAction(player);
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedAction = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("action");
+                continue;
+            }
+            if (selectedAction < 0 || selectedAction > 4) {
+                Warning.invalidDigit("action");
+            }
+        } while (selectedAction < 0 || selectedAction > 4);
 
-        int selectedAction = KEYBOARD.nextInt();
-        while (selectedAction < 0 || selectedAction > 4) {
-            Warning.invalidDigit("action");
-            selectedAction = KEYBOARD.nextInt();
-        }
         switch (selectedAction) {
             case 0:
                 player.attack();
@@ -139,13 +166,23 @@ public class Game {
 
     private void gameOver(Character winner, Character loser) {
         Message.gameOver(winner, loser);
-        Message.askForNewGame();
 
-        int selectedOption = KEYBOARD.nextInt();
-        while (selectedOption < 0 || selectedOption > 1) {
-            Warning.invalidDigit("option");
-            selectedOption = KEYBOARD.nextInt();
-        }
+        int selectedOption = -1;
+        do {
+            Message.askForNewGame();
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedOption = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("option");
+                continue;
+            }
+            if (selectedOption < 0 || selectedOption > 1) {
+                Warning.invalidDigit("option");
+            }
+        } while (selectedOption < 0 || selectedOption > 2);
+
         switch (selectedOption) {
             case 0:
                 Warning.forcedEnd();

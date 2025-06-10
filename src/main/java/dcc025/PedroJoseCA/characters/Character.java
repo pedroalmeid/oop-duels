@@ -4,13 +4,10 @@ import dcc025.PedroJoseCA.game.Board;
 import dcc025.PedroJoseCA.logs.Message;
 import dcc025.PedroJoseCA.logs.Warning;
 
-import java.util.Random;
-import java.util.Scanner;
+import static dcc025.PedroJoseCA.game.Game.KEYBOARD;
+import static dcc025.PedroJoseCA.game.Game.RANDOM;
 
 public class Character {
-    final private Scanner KEYBOARD = new Scanner(System.in);
-    final Random RANDOM = new Random();
-
     protected String name;
     protected String className;
     private int hp = 100;
@@ -93,14 +90,21 @@ public class Character {
     }
 
     private String selectDirection() {
-        Message.askForDirection();
-
-        int selectedDirection = KEYBOARD.nextInt();
-
-        while (selectedDirection < 0 || selectedDirection > 3) {
-            Warning.invalidDigit("direction");
-            selectedDirection = KEYBOARD.nextInt();
-        }
+        int selectedDirection = -1;
+        do {
+            Message.askForDirection();
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedDirection = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("direction");
+                continue;
+            }
+            if (selectedDirection < 0 || selectedDirection > 3) {
+                Warning.invalidDigit("direction");
+            }
+        } while (selectedDirection < 0 || selectedDirection > 3);
 
         return switch (selectedDirection) {
             case 0 -> "up";
