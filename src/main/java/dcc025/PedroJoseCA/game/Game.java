@@ -86,7 +86,7 @@ public class Game {
 
         Message.askForCharacterName();
 
-        String selectedCharacterName = KEYBOARD.next();
+        String selectedCharacterName = KEYBOARD.nextLine();
         return switch (selectedCharacter) {
             case 0 -> new Bowman(selectedCharacterName, playerNumber, board);
             case 1 -> new Warrior(selectedCharacterName, playerNumber, board);
@@ -166,7 +166,6 @@ public class Game {
 
     private void gameOver(Character winner, Character loser) {
         Message.gameOver(winner, loser);
-        Message.askForNewGame();
 
         int selectedOption = -1;
         do {
