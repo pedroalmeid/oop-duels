@@ -32,10 +32,9 @@ public class Game {
 
     private void selectGameMode() {
         int selectedGameMode = 0;
-        String input;
         do {
             Message.gameModeSelection();
-            input = KEYBOARD.nextLine();
+            String input = KEYBOARD.nextLine();
             try {
                 selectedGameMode = Integer.parseInt(input);
             }
@@ -166,11 +165,22 @@ public class Game {
         Message.gameOver(winner, loser);
         Message.askForNewGame();
 
-        int selectedOption = KEYBOARD.nextInt();
-        while (selectedOption < 0 || selectedOption > 1) {
-            Warning.invalidDigit("option");
-            selectedOption = KEYBOARD.nextInt();
-        }
+        int selectedOption = -1;
+        do {
+            Message.askForNewGame();
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedOption = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("option");
+                continue;
+            }
+            if (selectedOption < 0 || selectedOption > 1) {
+                Warning.invalidDigit("option");
+            }
+        } while (selectedOption < 0 || selectedOption > 2);
+
         switch (selectedOption) {
             case 0:
                 Warning.forcedEnd();

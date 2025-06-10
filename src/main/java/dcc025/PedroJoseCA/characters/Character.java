@@ -93,14 +93,21 @@ public class Character {
     }
 
     private String selectDirection() {
-        Message.askForDirection();
-
-        int selectedDirection = KEYBOARD.nextInt();
-
-        while (selectedDirection < 0 || selectedDirection > 3) {
-            Warning.invalidDigit("direction");
-            selectedDirection = KEYBOARD.nextInt();
-        }
+        int selectedDirection = -1;
+        do {
+            Message.askForDirection();
+            String input = KEYBOARD.nextLine();
+            try {
+                selectedDirection = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e) {
+                Warning.invalidDigit("direction");
+                continue;
+            }
+            if (selectedDirection < 0 || selectedDirection > 3) {
+                Warning.invalidDigit("direction");
+            }
+        } while (selectedDirection < 0 || selectedDirection > 3);
 
         return switch (selectedDirection) {
             case 0 -> "up";
