@@ -30,6 +30,12 @@ public class Character {
     }
 
     protected void setHp(int newHp) {
+        if (newHp < 0) {
+            newHp = 0;
+        }
+        else if (newHp > 100) {
+            newHp = 100;
+        }
         hp = newHp;
     }
 
